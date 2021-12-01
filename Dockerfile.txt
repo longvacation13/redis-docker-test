@@ -1,0 +1,15 @@
+# 시작은 반드시 FROM 으로 시작해야한다. 
+# jdk 11 버전을 받는다.  
+FROM adoptopenjdk/openjdk11
+
+# CMD 키워드를 무조건 한번만 사용할 수 있다. 
+CMD ["./mvnw", "clean", "package"]
+
+# 배포할 파일 (와일드카드 방식) 
+ARG JAR_FILE_PATH=target/*.jar
+
+# COPY할 파일명 - 빌드파일을 app.jar로 copy 
+COPY ${JAR_FILE_PATH} app.jar
+
+# java를 실행하는 파라미터 정보 
+ENTRYPOINT ["java", "-jar", "app.jar"]
